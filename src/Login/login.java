@@ -139,18 +139,46 @@ public class login extends javax.swing.JFrame {
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
         // TODO add your handling code here:
         String pw = new String(login_pass.getPassword());
-        for(int k = 0; k<=customer.i; k++){
-            if((customer.email[k].equals(login_id.getText())) && (customer.password[k].equals(pw))){
-                //next page
-                customer.current = customer.i - 1;
-                new Products.products().setVisible(true);
+        File inputFile = new File("USERDATA.txt");
+     
+     String userNameInput = login_id.getText();
+     String passwordInput = pw;
+     
+     try {
+            Scanner in = new Scanner(new File("USERDATA.txt"));
+            while (in.hasNextLine())
+            {
+              String s = in.nextLine();  
+              String[] sArray = s.split(";");
+              
+              System.out.println(sArray[0]); //Just to verify that file is being read
+              System.out.println(sArray[4]);
+ 
+              
+              if (userNameInput.equals(sArray[0]) && passwordInput.equals(sArray[4]))
+              {
+                JOptionPane.showMessageDialog(null,
+                    "Login Successful", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+              }
+              else
+              {
+                JOptionPane.showMessageDialog(null,
+                    "Invalid Username / Password Combo", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+              }
+            }
+            
+            in.close();
+            
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "User Database Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
                 this.dispose(); 
                 break;
-            }else{
-                //not found
-                warn.setText("Wrong combination");
-            }
-        }
+  
     }//GEN-LAST:event_signinActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
