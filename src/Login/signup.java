@@ -5,6 +5,11 @@
  */
 package Login;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.*;
+import java.util.Scanner;
+
 /**
  *
  * @author Shivam
@@ -42,7 +47,7 @@ public class signup extends javax.swing.JFrame {
         signin = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        address = new javax.swing.JTextArea();
+        jtf_address = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -107,9 +112,9 @@ public class signup extends javax.swing.JFrame {
         jLabel5.setText("Phone Number");
         jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        address.setColumns(20);
-        address.setRows(5);
-        jScrollPane1.setViewportView(address);
+        jtf_address.setColumns(20);
+        jtf_address.setRows(5);
+        jScrollPane1.setViewportView(jtf_address);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,16 +214,29 @@ public class signup extends javax.swing.JFrame {
             int phone = Integer.parseInt(jtf_pno.getText());
             String address = (jtf_address.getText());
             //=================================================
-            try {
-    RandomAccessFile raf= new RandomAccessFile("USERDATA.txt","rw");
-   // appendStrToFile(raf,email_id);
-   raf.writeBytes(""+email_id);
-   raf.writeBytes(";"+name);
-   raf.writeBytes(";"+address);
-   raf.writeBytes(";"+phone);
-   raf.writeBytes(";"+password);
+            try{
+    	String content = email_id+";"+name+";"+address+";"+phone+";"+password+"\n";
+        //Specify the file name and path here
+    	File file =new File("C:\\Users\\Rut Shah\\Shopify-master\\USERDATA.txt");
 
-}
+    	/* This logic is to create the file if the
+    	 * file is not already present
+    	 */
+    	if(!file.exists()){
+    	   file.createNewFile();
+    	}
+
+    	//Here true is to append the content to file
+    	FileWriter fw = new FileWriter(file,true);
+    	//BufferedWriter writer give better performance
+    	BufferedWriter bw = new BufferedWriter(fw);
+    	bw.write(content);
+    	//Closing BufferedWriter Stream
+    	bw.close();
+
+	System.out.println("Data successfully appended at the end of file");
+
+      }
 catch (IOException e) {
 System.out.println("An error occurred.");
 }       
@@ -272,7 +290,6 @@ System.out.println("An error occurred.");
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Label_logo;
-    private javax.swing.JTextArea address;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -281,6 +298,7 @@ System.out.println("An error occurred.");
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jtf_address;
     private javax.swing.JTextField jtf_email;
     private javax.swing.JTextField jtf_name;
     private javax.swing.JTextField jtf_pno;
