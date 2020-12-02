@@ -201,20 +201,30 @@ public class signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         //String p = jtf_pno.getText();
         char []pw = pass.getPassword();
-        if(jtf_pno.getText().length() != 0 && jtf_name.getText().length() != 0 && jtf_email.getText().length() != 0 && pw.length != 0 && address.getText().length() != 0 ){
+        if(jtf_pno.getText().length() != 0 && jtf_name.getText().length() != 0 && jtf_email.getText().length() != 0 && pw.length != 0 && jtf_address.getText().length() != 0 ){
             //================================================
-            customer.email[customer.i] = jtf_email.getText();
-            customer.name[customer.i] = jtf_name.getText();
-            customer.password[customer.i] = new String(pw);
-            customer.phno[customer.i] = (jtf_pno.getText());
-            customer.address[customer.i] = (address.getText());
-            customer.i++;
+            String email_id = jtf_email.getText();
+            String name = jtf_name.getText();
+            String password = new String(pw);
+            int phone = Integer.parseInt(jtf_pno.getText());
+            String address = (jtf_address.getText());
             //=================================================
+            try {
+    RandomAccessFile raf= new RandomAccessFile("USERDATA.txt","rw");
+   // appendStrToFile(raf,email_id);
+   raf.writeBytes(""+email_id);
+   raf.writeBytes(";"+name);
+   raf.writeBytes(";"+address);
+   raf.writeBytes(";"+phone);
+   raf.writeBytes(";"+password);
+
+}
+catch (IOException e) {
+System.out.println("An error occurred.");
+}       
             setVisible(false);
             login s = new login();
             s.setVisible(true);
-        }else{
-            warn.setText("Please enter all fields");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
